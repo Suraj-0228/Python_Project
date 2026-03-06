@@ -13,12 +13,13 @@ from sklearn.metrics import mean_squared_error, r2_score, accuracy_score, classi
 warnings.filterwarnings('ignore')
 
 def load_data():
-    if os.path.exists('socialmedia_data.csv'):
-        df = pd.read_csv('socialmedia_data.csv')
+    file_path = 'socialmedia_data.csv'
+    if os.path.exists(file_path):
+        df = pd.read_csv(file_path)
         print('Dataset loaded successfully.')
         return df
     else:
-        print("Error: 'socialmedia_data.csv' not found.")
+        print(f"Error: '{file_path}' not found. Please ensure the CSV file is in the same directory as the script (or uploaded to your Colab workspace).")
         return None
 
 def clean_data(df):
@@ -212,7 +213,11 @@ def main():
         print("12. Classification Task (Predict High Stress)")
         print("0. Exit")
         
-        choice = input("\nEnter your choice (0-12): ")
+        try:
+            choice = input("\nEnter your choice (0-12): ")
+        except (KeyboardInterrupt, EOFError):
+            print("\nExiting...")
+            break
 
         match choice:
             case '1':
